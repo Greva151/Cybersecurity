@@ -1,0 +1,6 @@
+guardo lo stack prima che faccia il controllo 
+
+
+(gdb) init 
+(gdb) brva
+(gdb) brva 0x(indirizzo dell'if)
