@@ -1,0 +1,22 @@
+services:
+    app:
+      build: .
+      restart: unless-stopped
+      ports:
+          - "31346:25000"
+      environment:
+          PORT: 25000
+          DB_HOST: mysql
+          DB_USER: funny_table
+          DB_PASSWD: funny_table
+          DB_NAME: funny_table
+      depends_on:
+          - mysql
+
+    mysql:
+        image: mysql
+        restart: unless-stopped
+        environment:
+            MYSQL_RANDOM_ROOT_PASSWORD: yes
+        volumes:
+            - ./db.sql:/docker-entrypoint-initdb.d/db.sql:ro

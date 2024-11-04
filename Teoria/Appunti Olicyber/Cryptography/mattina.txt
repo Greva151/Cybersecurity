@@ -1,0 +1,98 @@
+//Gregorio Maria Vallé 4^C Informatica 25/01/2023
+//CRIPTO DICTIONARY libro
+// Crypto++ libreria C++
+//https://youtu.be/NmM9HA2MQGI
+// pypi.org/project/pycryptodome/
+
+la criptografia oggi è qualcosa che ci permette di nascondere un protocollo
+
+crifratura simmetrica: 
+	- si utilizza la stessa chiave per decriptare e criptare il messaggio
+	- tipo cifrario di cesare / ROT-x 
+
+principio di Kerckhoffs --> da guardare 
+
+come nascondere la chiave
+
+crifratura / codifica: 
+	-crifratura: si ha la chiave, deve garantirci che l'avversario non capisca il nostro messaggio
+	-codifica: il modo di scrivere le cose
+	
+proprietà di sicurezza: 
+	- confidenzialità: il dato è visibile solo a chi ne ha il permesso
+	- integrità: ci protegge dai danni che vengono fatti durante la trasmissione
+	- autenticazione: verifica l'identità di un utente e che il messaggio non venga cambiato e da chi arriva il messaggio
+	- non ripudio: si volevano legare persone a chiavi e messaggi
+	
+crifrario AES, cifrario a blocchi: 
+	- ogni 16 bytes una chiave
+	- se ti voglio mandare più di 16 bytes si spezzano in 16 bytes tutto il messaggio e si utilizza per tutti i blocchi la stessa chiave
+	
+si risolve con il CBC:
+	aggiungi ai 16 bytes un messaggio random( IV / nonce ) poi la chiave e si va avanti così
+	
+bit di sicurezza:
+	occorre troppo tempo per fare un brutforcesss
+	
+
+
+Numeri Casuali: 
+	random è se una sequenza che è impossibile da predire
+	e allora si prendono delle misurazioni
+	
+	- PRNG:
+		da cose piccole si generano cose random LCG funziona su C e C++, LFSR, MT19937
+		- esempi sicuri: ChaCha20, LegendrePRF non del tutto
+
+AES-CTR:
+	modalità conuter mode = non ci obbligare a usare lunghezze multiple di 16 bytes
+	
+	
+	
+	
+	
+crittografia a chiave pubblica:
+	protocolli che ci permettono di scambiare chiavi su interent
+	DIFFIE-HELLMAN   --> man-in-the-middle
+
+
+funzioni di hash:
+	- sha256sum
+	
+	utilizzare per controllare l'intregrità dei file 
+	
+	pbkdf : bcrypt, scrypt, Argon2 per salvare le password sui database 
+	
+	
+Firme Digitali: 
+	permettono di verificare che uno specifico messaggio è stato "validato" da una specifica persona
+	
+	RSA, DSA, ECDSA, EdDSA
+	
+
+il problema del trust:
+	toglie il problema del "man-in-the-middle"
+	
+	
+XOR:
+	- One-Time-Pad (Vernam, 1917)
+		- dobbiamo avere la chiave lunga almeno quanto il testo 
+		- ha la stessa probabilità che il bit risultato possa essere 0 o 1 
+		- la chiave può essere utilizzata solo una volta 
+		
+Aritmetica modulare: 
+	- Simmetriche: basate su algoritmi euristici
+	- Asimetriche: basate su problemi matematici "forti" 
+		- fattorizzazione 
+		- operazioni su curve ellittiche 
+		- reticoli 
+		- codici a correzione d'errore 
+		
+	a - b (mod c)	
+		
+	per fare le divisioni bisogna fare l'inverso moltiplicativo:
+		identità di Bézout:
+		 - dati a,b interi allora esistono sempre x,y interi tali che: 
+			x * a  y * b = MCD(a,b)
+			algoritmo di euclide esteso: 
+				- MCD(a,b) = MCD(a, a-b) --> MCD(a, a%b)

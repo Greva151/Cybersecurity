@@ -1,0 +1,7 @@
+- entrare attraverso la vpn 
+- zip con password 
+- dfir report (attacco da andare a vedere)
+	3 tool: 
+		- emotet 
+		- cobalt strike		//test da parte di professionisti che mettono alla prova professionisti, usato contro compagnie, chiavi di registro e utilizzo di tool specifici 
+		- quantum ransomware (quantum)

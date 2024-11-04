@@ -1,0 +1,15 @@
+version: "2.4"
+services:
+  qaas:
+    image: cybersecnatlab/socaz:debian-bullseye
+    restart: unless-stopped
+    pids_limit: 256
+    mem_limit: 512M
+    cpus: 0.5
+    volumes:
+      - ./data:/app/data
+      - ./qaas:/app/qaas:ro
+    command: ["socaz", "--bind", "0.0.0.0:5000", "--timeout", "300", "--cmd", "/app/qaas"]
+    working_dir: /app
+    ports:
+      - "42069:5000"

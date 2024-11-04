@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  shellrage:
+    pids_limit: 512
+    mem_limit: 512M
+    cpus: 0.5
+    build: .
+    restart: unless-stopped
+    ports:
+      - '31337:1234'
+    volumes:
+      - data:/app/data
+
+  # This is not a service with vulns,
+  # this is needed only for keeping the vulnbox storage from
+  # exploding. It eliminates accounts older than 10 minutes.
+  cleaner:
+    build: ./dedcleaner
+    restart: unless-stopped
+    volumes:
+      - data:/data
+    environment:
+      - DELETE_AFTER=10m
+      - SLEEP=10m
+      - DIRS=/data
+volumes:
+  data:

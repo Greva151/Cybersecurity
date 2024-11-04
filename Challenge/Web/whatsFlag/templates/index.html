@@ -1,0 +1,154 @@
+<html lang="en">
+<head>
+	<title>WhatsFlag</title>
+</head>
+<body>
+<h3 id="message"></h3>
+
+<h4>The admin chat is {{ admin_chat }}</h4>
+
+<h1>Chats</h1>
+<ul id="chatList">
+</ul>
+<button id="createChat">Create chat</button>
+
+<h2>Messages</h2>
+<h4 id="chatId"></h4>
+<ul id="chatMessages">
+</ul>
+
+<input type="text" id="messageText">
+<button id="sendMessage">Send message</button>
+
+<h2>Join chat</h2>
+<input type="text" id="joinUuid">
+<input type="text" id="joinToken">
+<button id="joinChat">Join</button>
+
+<script>
+	const messageElem = document.getElementById('message')
+	messageElem.innerHTML = ''
+
+	function checkError(data) {
+		if ('error' in data) {
+			messageElem.innerText = data['error']
+			return true
+		}
+
+		return false
+	}
+
+	const chatList = document.getElementById('chatList')
+	chatList.innerHTML = ''
+
+	const chatId = document.getElementById('chatId')
+	chatId.innerHTML = ''
+
+	const chatMessages = document.getElementById('chatMessages')
+	chatMessages.innerHTML = ''
+
+	function loadChats() {
+		fetch(`/chats`)
+			.then(res => res.json())
+			.then(data => {
+				if (checkError(data))
+					return
+
+				chatList.innerHTML = ''
+				for (const chat of data) {
+					const a = document.createElement('a')
+					a.href = '#'
+					a.innerText = chat
+					a.addEventListener('click', ev => loadMessages(ev.target.innerText))
+
+					const li = document.createElement('li')
+					li.appendChild(a)
+
+					chatList.appendChild(li)
+				}
+			})
+			.catch(console.error)
+	}
+
+	function loadMessages(uuid) {
+		fetch(`/messages/${uuid}`)
+			.then(res => res.json())
+			.then(data => {
+				if (checkError(data))
+					return
+
+				chatId.innerHTML = ''
+				chatId.innerText = uuid
+
+				chatMessages.innerHTML = ''
+				for (const msg of data) {
+					const li = document.createElement('li')
+					li.innerText = msg
+					chatMessages.appendChild(li)
+				}
+			})
+			.catch(console.error)
+	}
+
+	// send message
+	document.getElementById('sendMessage').addEventListener('click', () => {
+		const messageTextElem = document.getElementById('messageText')
+		if (!messageTextElem.value || !chatId.innerText)
+			return
+
+		fetch(`/messages/${chatId.innerText}`, {
+			method: 'PUT',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({message: messageTextElem.value}),
+		})
+			.then(res => res.json())
+			.then(data => {
+				if (checkError(data))
+					return
+
+				messageTextElem.value = ''
+				loadMessages(chatId.innerText)
+			})
+			.catch(console.error)
+	})
+
+	// create chat
+	document.getElementById('createChat').addEventListener('click', () => {
+		fetch('/chats', {method: 'POST'})
+			.then(res => res.json())
+			.then(data => {
+				if (checkError(data))
+					return
+
+				messageElem.innerText = `New chat: ${data['uuid']}, invite: ${data['invite']}`
+				loadChats()
+			})
+			.catch(console.error)
+	})
+
+	// join chat
+	document.getElementById('joinChat').addEventListener('click', () => {
+		const joinUuidElem = document.getElementById('joinUuid'), joinInviteElem = document.getElementById('joinToken')
+		if (!joinUuidElem.value || !joinInviteElem.value)
+			return
+
+		fetch(`/chats/${joinUuidElem.value}/${joinInviteElem.value}`, {method: 'POST'})
+			.then(res => res.json())
+			.then(data => {
+				if (checkError(data))
+					return
+
+				messageElem.innerText = 'Joined chat!'
+				joinUuidElem.value = ''
+				joinInviteElem.value = ''
+
+				loadChats()
+			})
+			.catch(console.error)
+	})
+
+	// first chats load
+	loadChats()
+</script>
+</body>
+</html>

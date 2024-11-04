@@ -1,0 +1,17 @@
+logaritmo discreto di 96 in base 5 (mod 97): 
+
+MCD(5,97) = 1 
+
+
+5 ^ phi(97) = 1 (mod 97)    --> 5 ^ 96 = 1 (mod 97) 
+
+for x in range(96):
+	if pow(5, x, 97) == 96:
+		print(x)
+
+parametri pubblici: 
+	- p = 127
+	- g = 2 
+nostra chiave pubblica = pow(g,b,p)
+
+chiave condivisa = pow(A, chiave privata, p) a = sua chiave pubblica 

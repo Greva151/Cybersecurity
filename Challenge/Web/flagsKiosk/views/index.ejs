@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+<title>flags kiosk</title>
+</head>
+<body>
+Welcome to the kiosk!
+<br/>
+Your balance is: <%= balance %> <a href="/withdraw?amount=100">Add 100 more</a>
+
+<h1 id="message"></h1>
+
+There are lots of things you can buy:
+<ul>
+<% prices.forEach(([item, price]) => { %>
+    <li><a href="/buy?item=<%= item %>">Buy <%= item %> for <%= price %></a></li>
+<% }) %>
+</ul>
+<script>
+    const msgElem = document.getElementById('message')
+    const query = new URLSearchParams(location.search)
+    if (query.get('error')) {
+        msgElem.innerText = 'Oops: ' + query.get('error')
+    } else if (query.get('reward')) {
+        msgElem.innerText = 'Thank you for buying: ' + query.get('reward')
+    } else {
+        msgElem.innerText = ''
+    }
+</script>
+</body>
+</html>

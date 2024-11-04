@@ -1,0 +1,128 @@
+// Gregorio Maria Vallé 4^C Informatica 27/01/2023
+//Burp   --> ci permette di analizzare le richieste di get  e risposte 
+//portswigger.net
+//https://portswigger.net/web-security/csrf/lab-no-defenses
+//https://portswigger.net/web-security/csrf/bypassing-token-validation/lab-token-not-tied-to-user-session
+//ngrok		--> 	hostare un payload per poi eseguire un file js 
+// webook.site  --> ci permette di ricevere tutte le richieste che vengono fatte a questo URL 
+// https://github.com/swisskyrepo/PayloadsAllTheThings  --> sql  
+
+WEB
+
+- protocollo HTTP:
+	- era un progetto per condividere documenti tra le università
+	- si basa su un'architettura client-server: 
+		- server: offre il servizio
+		- client: quello che si connette al server per ottenere una risorsa 
+	
+	- metodi:
+		- GET  			--> leggere una risorsa
+		- POST			--> per modificare una risorsa  
+		- PUT 			-->  ''
+		- DELETE 		
+		- HEAD
+		- OPTIONS
+	
+	- Richiesta:
+		- Headers: forniscono informazioni per gestire la richiesta nel modo corretto
+			- host: specifica il sito a cui è destinata una richesta 
+			- User-Agent: specifica il tipo di client che sta chiedendo una richiesta
+			- Authorization: autorizza la richiesta con appositi token
+		
+		- Body (opzionale): utilizato per inviare al server dati allegati alla richiesta
+		
+	- Risposta: 
+			- Status Line:
+				- versione del protocollo
+				- status code: 
+					- 2xx: successo
+					- 3xx: redirect
+					- 4xx: errore del client
+					- 5xx: errore del server
+					
+			- Headers: forniscono maggiori informazioni riguardo la risposta 
+				- Server: fornisce informazioni sul server
+				- Location: URL a cui il client deve richiedere la risposta
+				- ecc: ...
+			
+			- Body: il contenuto delal risorsa richiesta
+
+
+Autenticazione cookies: 
+	- a cosa servono: per l'autenticazione 
+	- cookie: sono stringhe che identificano un client
+	- come gestire una sessione: 
+		- stringa random 
+		- JWT
+	- cookie:
+		- durata: esprimibile con una data di scadenza, il browser elimina i cokie scaduti 
+		- dominio: il dominio a cui è associato il cookie, meglio evirtarlo, non si mette quasi mai
+		- path: per limitare il cookie a solo alcune path del sito 
+	- opzioni di sicurezza: 
+		- secure: richiede il cookie solo tramite HTTPS
+		- TttpOnly: fa si che il cookie non sia accessibile da JavaScript
+		- SameSite: controlla quanto il cookie venga inviato attraverso nel caso di richieste cross-site
+	- Cross-site request forgery: 
+		- è un tipo di attacco
+		- aggiunto token CSRF:
+			- gestito dal sever
+			- validano la richiesta 
+
+
+- TLS e HTTPS:
+	- TLS:
+		- connessione privata
+		- offre comunicazioni cifratura
+		- cifra i messaggi tra client e server
+		- offre certificati per il problema di man-int-the-middle
+	- HTTPS:
+		- utilizza tlas per proteggere
+		- https = http + tls
+
+- WebSocket:
+	- altro protocollo come http
+	- meno latenza rispetto http
+	
+- javascript: 
+	- Same-origin policy: 
+		- impede di leggere dati sensibili da altri siti 
+	
+	
+	//se mettiamo dei tag all'interno di un commento di una pagina web, tutte le volte che una persona apre 
+	// la pagina esegue il codice js scritto nel commento 
+	// MOLTO PERICOLOSO
+	//bisogna mettere tutti i filtri per i tag html -->   "<img> src="x" onerror = "alert(1)"    <-- CASINO
+	//filtro di html per i tag per i gli input inseriti dall'utente: 	--->   	html.ENCODE()  semplicente i caratteri speciali vengono cambiati con & esempio: < diventa &
+	
+	// se vogliamo comunque implementare alcuni tag tipo <strong> possiamo fare una whitelist di tag html che si possono aggiungere nei commenti
+	
+	- XSS Cross-site-Scripting:
+		- DOM-based XSS:
+		- Reflected XSS:
+		- Stored XSS: 
+		
+	- CSP (Content Security Policy):
+		- serve per mitigare le XSS
+		- decide quali cose eseguire, tipo solo le cose "SELF" che sono i tag nativi della pagina originale html 
+		- disabilita "onerror" "onclick" 
+		- CSP-nonce  --> stringa random prima dello script così si esegue solo lo script con questo "permesso" 
+		
+
+
+- Database: 
+	- servono per salvare dati e richiederli
+	- come vengono salvati: 
+		- id
+		- nome 
+		- email 
+		- password
+	
+	- sql injection:
+		come con xss se l'input non viene controllato possiamo aggiungere del codice sql 
+		
+		- come proteggersi:
+			- sanitizzare sempre l'input 
+			- utilizzare prepared statement
+			
+		- tipi: 
+			1) cambiare il comando

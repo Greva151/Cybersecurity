@@ -1,0 +1,14 @@
+bandit: 
+
+livello 1: NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL
+livello 2: rRGizSaX8Mk1RTb1CNQoXTcYZWU6lgzi
+livello 3: aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG
+livello 4: 2EW7BBsr6aMMoJ2HjW067dm8EgX26xNe
+livello 5: lrIWWI6bB37kxfiCQZqUdOIYfr6eEeqR
+livello 6: P4L4vucdmLnm8I7Vl7jG1ApGSfjYKqJU
+livello 7: z7WtoNQU2XfjmMtWA8u5rN4vzqu4v99S
+livello 8: TESKZC0XvTetK0S9xNwm25STk5iWrBvP
+livello 9: EN632PlfYiZbn3PhVK3XOGSlNInNE00t
+livello 10: G7w8LIi6J3kTb8A7j9LgrywtEUlyyp6s
+livello 11: 6zPeziLdR2RKNdNYFNb6nVCKzphlXHBM
+livello 12: JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv

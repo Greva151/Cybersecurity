@@ -1,0 +1,22 @@
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "31344:22000"
+    environment:
+      FLAG: flag{dummy}
+      DB_HOST: mysql
+      DB_USER: baby_login
+      DB_PASSWD: baby_login
+      DB_NAME: baby_login
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: yes
+    volumes:
+      - ./db.sql:/docker-entrypoint-initdb.d/db.sql:ro

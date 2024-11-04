@@ -1,0 +1,25 @@
+modello iso / (tcp/ip)
+
+	- iso: fatto di 7 livelli (ideale)
+	- tcp/ip: fatto da 4 livello (reale)
+	
+protoccollo IP livello 3:
+	- a cosa serve: a individuare la strada che deve fare il pacchetto per arrivare a destionazione
+	
+protocollo livello 4: 
+	- TCP:	
+		- più stabile
+		- crea una connessione:
+			- sync (cliente)
+			- sync ack (server)
+			- ack (cliente)
+		- se si perde un pacchetto ci sono dei protoccoli per la rispedizione 
+	- UDP:
+		- non riordina i pacchetti 
+		- se si perde un pacchetto viene perso
+	- porte sono gli indirizzi di livello 4
+		- prime 1023: sono per i servizi di sistema (porta 53 DNS)
+		- da 1024 a 49151: porte per particolari applicazioni come le vpn 
+		- tutte le altre: possono essere utilizzate liberamente per altri programmi
+	- TCPDUMP("www.indirizzoweb.it"): serve per analizzare il traffico di rete, è da linea di comando
+	

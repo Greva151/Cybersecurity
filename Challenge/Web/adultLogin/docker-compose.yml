@@ -1,0 +1,21 @@
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "31345:23000"
+    environment:
+      DB_HOST: mysql
+      DB_USER: adult_login
+      DB_PASSWD: adult_login
+      DB_NAME: adult_login
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: yes
+    volumes:
+      - ./db.sql:/docker-entrypoint-initdb.d/db.sql:ro

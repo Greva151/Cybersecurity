@@ -1,0 +1,95 @@
+//Gregorio Maria Vallé 4^C Informatica 26/01/2023
+// nm -n a.out  --> mi dice i simboli del file ELF
+// strip a.out  --> mi toglie tutti i simboli del file ELF
+// context.binary = "./challeng"
+//https://docs.pwntools.com/en/stable/about.html
+
+Software
+
+- eseguibile nativo: 
+	- diverso da binario tipo compilatore e script python 
+	- ha bisogno di informazioni: 
+		- architettura
+- eseguibile:
+	- serve un'altro eseguibile per tradurre le istruizioni del linguaggio per la CPU
+		
+- formato ELF (Executable and Linkable Format): 
+	- utilizzato sistemi linux per rappresentare file eseguibili 
+	- insieme di piccoli blocchi che hanno funzioni diversi che insieme permettono di poter eseguire lo script
+	- esistono due tipo di ELF:
+		- file eseguibile
+		- librerie condivise (Linkable):
+			- sono librerie, servono a supporto di altri eseguibili 
+			
+- sezioni del programma:
+	1) ELF header				--> dati generali che ci dicono come è stato fatto l'eseguibile
+	2) program header table 	--> tabelle che tengono gli indirizzi delle altre sezioni 
+	3) .text					--> c'è il codice eseguibile 
+	4) .rodata
+	5) ...
+	6).data
+	7) section header table		--> tabelle che tengono gli indirizzi delle altre sezioni
+	
+	
+- due categorie di sfide bunary:
+	- REV:
+		- scopo: capire il funzionamento del programma 
+	- PWN: 
+		- hai bisogno di capire come funziona il programma 
+		- scopo: devi trovare la vulnerabilità dentro l'eseguibile e grazie a quelle cambiare il funzionamento del programma
+		- spesso viene messo un servizio remotoss
+		
+- cos'è la memoria: 
+	- astrazione della memoria: 
+		1) memoria fisica: 
+			- sequenza di byte indirizzabili 
+		- sistema operativo		-->  insieme di piccoli software che ci aiuta con l'interazione con il computer
+		2) memoria virtuale: 
+			- permette a ogni programma di credere di avere tutta la memoria per se
+			- è di una dimensione fissata 
+			- mapping fra aree di memoria virtuale e fisica 
+			- flag di protezione degli accessi:
+				- leggibile
+				- scrivibile 
+				- execute
+		- linguaggio di programmazione
+		3) dati tipati (variabili):
+			- visione interpretata dei byte
+			- 4 byte di fila protrebbero essere un numero intero invece al livello 1 sono semplicemente 4 locazioni di memoria 
+			
+	- spazio di memoria viruale linux:
+		- text 				--> codice dell'eseguibile							|
+		- data				--> dati globali inizializzati 						|
+		- bss				--> dati globali azzerati 							|	scendendo il numero riferente alla locazione di memoria 
+		- heap 				--> allocazioni dinamiche 							|	crescerà 
+		- librerie 			--> binari delle librerie dinamiche					|
+		- stack 			--> variabili locali, record di attivazioni 		|
+		
+	- compilazione dinamicamente / staticamente: 
+		- staticamente:
+			- vecchio modo
+			- non si utilizza quasi più 
+		- dinamicamente
+		
+- resgistri x86-64:
+	- program counter = registro rip 
+	- stack:
+		- registro di inizio dello stack = rsp 
+		- registro di fine dello stack = rbp 
+			
+
+- Reverse Engineering:
+	- analisi statica:
+		- ghidra 
+		- ida
+	- analisi dinamica: 
+		- gdb 
+		
+- PWN:
+	- Pwnare = inserire in input un input non previsto che prendre il controllo del programma
+	- eseguire il codice che vogliamo noi su una macchina senza che quella macchina dovesse eseguire quel determinato codice 
+	- è possibile fare dei errori nella sicurezza per l'utilizzo della memoria
+	
+	- memoriy corruption: 
+		- buffer overflow lineare: 
+			- 

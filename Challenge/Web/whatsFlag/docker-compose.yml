@@ -1,0 +1,10 @@
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "31348:8080"
+    environment:
+      PORT: 8080
+      SECRET_KEY: secret
+      FLAG: flag{dummy}

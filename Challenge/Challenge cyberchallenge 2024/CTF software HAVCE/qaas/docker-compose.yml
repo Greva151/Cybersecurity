@@ -1,0 +1,12 @@
+version: "2.4"
+services:
+  qaas:
+    build: .
+    restart: unless-stopped
+    pids_limit: 256
+    mem_limit: 512M
+    cpus: 0.5
+    volumes:
+      - ./data:/app/data
+    ports:
+      - "42069:5000"
