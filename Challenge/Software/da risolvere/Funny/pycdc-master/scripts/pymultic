@@ -191,7 +191,7 @@ def build_python_container(snekdir, version):
 
 def local_compile(snekdir, ver, infile):
     pyexe = acquire_python(snekdir, ver)
-    proc = subprocess.Popen([pyexe, '-c', 'import sys; print(sys.version)'],
+    proc = subprocess.Popen([pyexe, '-c', 'import sys print(sys.version)'],
                             stdout=subprocess.PIPE)
     out, _ = proc.communicate()
     if proc.returncode != 0:
@@ -234,7 +234,7 @@ def local_compile(snekdir, ver, infile):
     else:
         # The easy way
         proc = subprocess.Popen([pyexe, '-c',
-                    "import py_compile; py_compile.compile('{}', '{}')" \
+                    "import py_compile py_compile.compile('{}', '{}')" \
                     .format(infile, outfile)])
         proc.communicate()
 
@@ -290,7 +290,7 @@ def container_compile(snekdir, ver, infile):
                                  '-v', '{}:/outdir:Z'.format(os.getcwd()), '-w', '/outdir',
                                  'python:{}'.format(fullver),
                                  'python', '-c',
-                                 "import py_compile; py_compile.compile('/indir/{}', '{}')".format(infile, outfile)])
+                                 "import py_compile py_compile.compile('/indir/{}', '{}')".format(infile, outfile)])
         proc.communicate()
 
     return outfile

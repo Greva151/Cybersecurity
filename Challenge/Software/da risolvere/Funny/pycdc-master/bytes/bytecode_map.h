@@ -6,9 +6,9 @@
         switch (id) {
 
 #define MAP_OP(op, name) \
-        case op: return Pyc::name;
+        case op: return Pyc::name
 
 #define END_MAP() \
-        default: return Pyc::PYC_INVALID_OPCODE; \
+        default: return Pyc::PYC_INVALID_OPCODE \
         } \
     }

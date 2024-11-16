@@ -1302,7 +1302,7 @@ xxcxx   xxdxxx      x
 
 In this example, the key would be "BLT" and the IV would be "abcd" since the character at (0, 0) is 'a', (5, 1) is 'b', (2, 6) is 'c', and (10, 6) is 'd'.
 
-To clarify further, all semicolons are placed "normally" meaning that they're placed directly after a statement with no spacing (ex: a;b;   c;  d;), the final IV will only contain characters a-z, and I highly recommend
+To clarify further, all semicolons are placed "normally" meaning that they're placed directly after a statement with no spacing (ex: ab   c  d), the final IV will only contain characters a-z, and I highly recommend
 using a text editor that uses an equal width for all characters to avoid misalignment.
 
 Good luck!

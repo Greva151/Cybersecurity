@@ -9,29 +9,29 @@ diff -rupN a/Include/objimpl.h b/Include/objimpl.h
 + * Former over-aligned definition of PyGC_Head, used to compute the size of the
 + * padding for the new version below.
 + */
-+union _gc_head;
++union _gc_head
 +union _gc_head_old {
 +	struct {
-+		union _gc_head_old *gc_next;
-+		union _gc_head_old *gc_prev;
-+		Py_ssize_t gc_refs;
-+	} gc;
-+	long double dummy;
-+};
++		union _gc_head_old *gc_next
++		union _gc_head_old *gc_prev
++		Py_ssize_t gc_refs
++	} gc
++	long double dummy
++}
 +
  /* GC information is stored BEFORE the object structure. */
  typedef union _gc_head {
  	struct {
 @@ -248,7 +262,8 @@ typedef union _gc_head {
- 		union _gc_head *gc_prev;
- 		Py_ssize_t gc_refs;
- 	} gc;
--	long double dummy;  /* force worst-case alignment */
-+	double dummy; /* Force at least 8-byte alignment. */
-+	char dummy_padding[sizeof(union _gc_head_old)];
- } PyGC_Head;
+ 		union _gc_head *gc_prev
+ 		Py_ssize_t gc_refs
+ 	} gc
+-	long double dummy  /* force worst-case alignment */
++	double dummy /* Force at least 8-byte alignment. */
++	char dummy_padding[sizeof(union _gc_head_old)]
+ } PyGC_Head
  
- extern PyGC_Head *_PyGC_generation0;
+ extern PyGC_Head *_PyGC_generation0
 diff -rupN a/Makefile.pre.in b/Makefile.pre.in
 --- a/Makefile.pre.in	2008-09-21 17:22:44.000000000 -0700
 +++ b/Makefile.pre.in	2019-09-30 15:50:47.804578897 -0700

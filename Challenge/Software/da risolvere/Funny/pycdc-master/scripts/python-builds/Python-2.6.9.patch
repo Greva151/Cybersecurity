@@ -9,29 +9,29 @@ diff -rupN a/Include/objimpl.h b/Include/objimpl.h
 + * Former over-aligned definition of PyGC_Head, used to compute the size of the
 + * padding for the new version below.
 + */
-+union _gc_head;
++union _gc_head
 +union _gc_head_old {
 +    struct {
-+        union _gc_head_old *gc_next;
-+        union _gc_head_old *gc_prev;
-+        Py_ssize_t gc_refs;
-+    } gc;
-+    long double dummy;
-+};
++        union _gc_head_old *gc_next
++        union _gc_head_old *gc_prev
++        Py_ssize_t gc_refs
++    } gc
++    long double dummy
++}
 +
  /* GC information is stored BEFORE the object structure. */
  typedef union _gc_head {
      struct {
 @@ -248,7 +262,8 @@ typedef union _gc_head {
-         union _gc_head *gc_prev;
-         Py_ssize_t gc_refs;
-     } gc;
--    long double dummy;  /* force worst-case alignment */
-+    double dummy; /* Force at least 8-byte alignment. */
-+    char dummy_padding[sizeof(union _gc_head_old)];
- } PyGC_Head;
+         union _gc_head *gc_prev
+         Py_ssize_t gc_refs
+     } gc
+-    long double dummy  /* force worst-case alignment */
++    double dummy /* Force at least 8-byte alignment. */
++    char dummy_padding[sizeof(union _gc_head_old)]
+ } PyGC_Head
  
- extern PyGC_Head *_PyGC_generation0;
+ extern PyGC_Head *_PyGC_generation0
 diff -rupN a/setup.py b/setup.py
 --- a/setup.py	2013-10-29 08:04:39.000000000 -0700
 +++ b/setup.py	2019-09-30 16:19:09.146284481 -0700

@@ -38,58 +38,58 @@ enum PycMagic {
     MAGIC_3_13 = 0x0A0D0DF3,
 
     INVALID = 0,
-};
+}
 
 class PycModule {
 public:
     PycModule() : m_maj(-1), m_min(-1), m_unicode(false) { }
 
-    void loadFromFile(const char* filename);
-    void loadFromMarshalledFile(const char *filename, int major, int minor);
-    bool isValid() const { return (m_maj >= 0) && (m_min >= 0); }
+    void loadFromFile(const char* filename)
+    void loadFromMarshalledFile(const char *filename, int major, int minor)
+    bool isValid() const { return (m_maj >= 0) && (m_min >= 0) }
 
-    int majorVer() const { return m_maj; }
-    int minorVer() const { return m_min; }
+    int majorVer() const { return m_maj }
+    int minorVer() const { return m_min }
 
     int verCompare(int maj, int min) const
     {
         if (m_maj == maj)
-            return m_min - min;
-        return m_maj - maj;
+            return m_min - min
+        return m_maj - maj
     }
 
-    bool isUnicode() const { return m_unicode; }
+    bool isUnicode() const { return m_unicode }
 
     bool strIsUnicode() const
     {
-        return (m_maj >= 3) || (m_code->flags() & PycCode::CO_FUTURE_UNICODE_LITERALS) != 0;
+        return (m_maj >= 3) || (m_code->flags() & PycCode::CO_FUTURE_UNICODE_LITERALS) != 0
     }
 
     bool internIsBytes() const
     {
-        return (m_maj < 3) && (m_code->flags() & PycCode::CO_FUTURE_UNICODE_LITERALS) != 0;
+        return (m_maj < 3) && (m_code->flags() & PycCode::CO_FUTURE_UNICODE_LITERALS) != 0
     }
 
-    PycRef<PycCode> code() const { return m_code; }
+    PycRef<PycCode> code() const { return m_code }
 
-    void intern(PycRef<PycString> str) { m_interns.emplace_back(std::move(str)); }
-    PycRef<PycString> getIntern(int ref) const;
+    void intern(PycRef<PycString> str) { m_interns.emplace_back(std::move(str)) }
+    PycRef<PycString> getIntern(int ref) const
 
-    void refObject(PycRef<PycObject> obj) { m_refs.emplace_back(std::move(obj)); }
-    PycRef<PycObject> getRef(int ref) const;
+    void refObject(PycRef<PycObject> obj) { m_refs.emplace_back(std::move(obj)) }
+    PycRef<PycObject> getRef(int ref) const
 
-    static bool isSupportedVersion(int major, int minor);
-
-private:
-    void setVersion(unsigned int magic);
+    static bool isSupportedVersion(int major, int minor)
 
 private:
-    int m_maj, m_min;
-    bool m_unicode;
+    void setVersion(unsigned int magic)
 
-    PycRef<PycCode> m_code;
-    std::vector<PycRef<PycString>> m_interns;
-    std::vector<PycRef<PycObject>> m_refs;
-};
+private:
+    int m_maj, m_min
+    bool m_unicode
+
+    PycRef<PycCode> m_code
+    std::vector<PycRef<PycString>> m_interns
+    std::vector<PycRef<PycObject>> m_refs
+}
 
 #endif

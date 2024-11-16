@@ -53,5 +53,5 @@ Additional contributions from:
 * Olivier Iffrig
 * Zlodiy
 
-It is released under the terms of the GNU General Public License, version 3;
+It is released under the terms of the GNU General Public License, version 3
 See LICENSE file for details.

@@ -29,102 +29,102 @@ exceptiontable                                                          Obj
 void PycCode::load(PycData* stream, PycModule* mod)
 {
     if (mod->verCompare(1, 3) >= 0 && mod->verCompare(2, 3) < 0)
-        m_argCount = stream->get16();
+        m_argCount = stream->get16()
     else if (mod->verCompare(2, 3) >= 0)
-        m_argCount = stream->get32();
+        m_argCount = stream->get32()
 
     if (mod->verCompare(3, 8) >= 0)
-        m_posOnlyArgCount = stream->get32();
+        m_posOnlyArgCount = stream->get32()
     else
-        m_posOnlyArgCount = 0;
+        m_posOnlyArgCount = 0
 
     if (mod->majorVer() >= 3)
-        m_kwOnlyArgCount = stream->get32();
+        m_kwOnlyArgCount = stream->get32()
     else
-        m_kwOnlyArgCount = 0;
+        m_kwOnlyArgCount = 0
 
     if (mod->verCompare(1, 3) >= 0 && mod->verCompare(2, 3) < 0)
-        m_numLocals = stream->get16();
+        m_numLocals = stream->get16()
     else if (mod->verCompare(2, 3) >= 0 && mod->verCompare(3, 11) < 0)
-        m_numLocals = stream->get32();
+        m_numLocals = stream->get32()
     else
-        m_numLocals = 0;
+        m_numLocals = 0
 
     if (mod->verCompare(1, 5) >= 0 && mod->verCompare(2, 3) < 0)
-        m_stackSize = stream->get16();
+        m_stackSize = stream->get16()
     else if (mod->verCompare(2, 3) >= 0)
-        m_stackSize = stream->get32();
+        m_stackSize = stream->get32()
     else
-        m_stackSize = 0;
+        m_stackSize = 0
 
     if (mod->verCompare(1, 3) >= 0 && mod->verCompare(2, 3) < 0)
-        m_flags = stream->get16();
+        m_flags = stream->get16()
     else if (mod->verCompare(2, 3) >= 0)
-        m_flags = stream->get32();
+        m_flags = stream->get32()
     else
-        m_flags = 0;
+        m_flags = 0
 
     if (mod->verCompare(3, 8) < 0) {
         // Remap flags to new values introduced in 3.8
         if (m_flags & 0xF0000000)
-            throw std::runtime_error("Cannot remap unexpected flags");
-        m_flags = (m_flags & 0xFFFF) | ((m_flags & 0xFFF0000) << 4);
+            throw std::runtime_error("Cannot remap unexpected flags")
+        m_flags = (m_flags & 0xFFFF) | ((m_flags & 0xFFF0000) << 4)
     }
 
-    m_code = LoadObject(stream, mod).cast<PycString>();
-    m_consts = LoadObject(stream, mod).cast<PycSequence>();
-    m_names = LoadObject(stream, mod).cast<PycSequence>();
+    m_code = LoadObject(stream, mod).cast<PycString>()
+    m_consts = LoadObject(stream, mod).cast<PycSequence>()
+    m_names = LoadObject(stream, mod).cast<PycSequence>()
 
     if (mod->verCompare(1, 3) >= 0)
-        m_localNames = LoadObject(stream, mod).cast<PycSequence>();
+        m_localNames = LoadObject(stream, mod).cast<PycSequence>()
     else
-        m_localNames = new PycTuple;
+        m_localNames = new PycTuple
 
     if (mod->verCompare(3, 11) >= 0)
-        m_localKinds = LoadObject(stream, mod).cast<PycString>();
+        m_localKinds = LoadObject(stream, mod).cast<PycString>()
     else
-        m_localKinds = new PycString;
+        m_localKinds = new PycString
 
     if (mod->verCompare(2, 1) >= 0 && mod->verCompare(3, 11) < 0)
-        m_freeVars = LoadObject(stream, mod).cast<PycSequence>();
+        m_freeVars = LoadObject(stream, mod).cast<PycSequence>()
     else
-        m_freeVars = new PycTuple;
+        m_freeVars = new PycTuple
 
     if (mod->verCompare(2, 1) >= 0 && mod->verCompare(3, 11) < 0)
-        m_cellVars = LoadObject(stream, mod).cast<PycSequence>();
+        m_cellVars = LoadObject(stream, mod).cast<PycSequence>()
     else
-        m_cellVars = new PycTuple;
+        m_cellVars = new PycTuple
 
-    m_fileName = LoadObject(stream, mod).cast<PycString>();
-    m_name = LoadObject(stream, mod).cast<PycString>();
+    m_fileName = LoadObject(stream, mod).cast<PycString>()
+    m_name = LoadObject(stream, mod).cast<PycString>()
 
     if (mod->verCompare(3, 11) >= 0)
-        m_qualName = LoadObject(stream, mod).cast<PycString>();
+        m_qualName = LoadObject(stream, mod).cast<PycString>()
     else
-        m_qualName = new PycString;
+        m_qualName = new PycString
 
     if (mod->verCompare(1, 5) >= 0 && mod->verCompare(2, 3) < 0)
-        m_firstLine = stream->get16();
+        m_firstLine = stream->get16()
     else if (mod->verCompare(2, 3) >= 0)
-        m_firstLine = stream->get32();
+        m_firstLine = stream->get32()
 
     if (mod->verCompare(1, 5) >= 0)
-        m_lnTable = LoadObject(stream, mod).cast<PycString>();
+        m_lnTable = LoadObject(stream, mod).cast<PycString>()
     else
-        m_lnTable = new PycString;
+        m_lnTable = new PycString
 
     if (mod->verCompare(3, 11) >= 0)
-        m_exceptTable = LoadObject(stream, mod).cast<PycString>();
+        m_exceptTable = LoadObject(stream, mod).cast<PycString>()
     else
-        m_exceptTable = new PycString;
+        m_exceptTable = new PycString
 }
 
 PycRef<PycString> PycCode::getCellVar(PycModule* mod, int idx) const
 {
     if (mod->verCompare(3, 11) >= 0)
-        return getLocal(idx);
+        return getLocal(idx)
 
     return (idx >= m_cellVars->size())
         ? m_freeVars->get(idx - m_cellVars->size()).cast<PycString>()
-        : m_cellVars->get(idx).cast<PycString>();
+        : m_cellVars->get(idx).cast<PycString>()
 }
