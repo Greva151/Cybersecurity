@@ -1,0 +1,2 @@
+flag = "ptm{fake_flag}"
+password = b"151af56b946060b8caf1d81ed95560e9cef18892219c92eb753cbff6d407dd6616d18cf1b928cd46ddd9a5434adbd4d721faa6918d891f5bd193a7572ae794c1"

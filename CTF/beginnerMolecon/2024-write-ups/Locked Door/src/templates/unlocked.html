@@ -1,0 +1,13 @@
+<html>
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/unlocked.css') }}">
+    </head>
+    <body>
+        <div class="terminal">
+            <h1>Door unlocked!</h1>
+            <div id="error-message"><p>{% if message %}{{message}}{% endif %}</p></div>
+            <div><p>{{flag}}</p></div>
+        </div>
+    </body>
+</html>

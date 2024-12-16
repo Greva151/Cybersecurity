@@ -1,0 +1,13 @@
+<html></html>
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/400.css') }}">
+    </head>
+    <body>
+        <div class="terminal">
+            <h1>ERROR {{code}}</h1>
+            <div><p>{{error}}</p></div>
+            <div><button type="button" onclick="window.location.href='/'">Return to Home</button></div>
+        </div>
+    </body>
+</html>

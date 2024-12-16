@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: monospace;
+    background-color: #00140A;
+    color: #00E36D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.terminal {
+    margin: 100px;
+    max-width: 1000px;
+    width: 1000px;
+    max-height: 500px;
+    height: fit-content;
+    padding: 50px;
+    background-color: #000;
+    border: solid 3px #00E36D;
+    border-radius: 30px;
+}
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+#error-message {
+    margin-bottom: 20px;
+    color: red;
+}
+p {
+    font-size: 1.5rem;
+}

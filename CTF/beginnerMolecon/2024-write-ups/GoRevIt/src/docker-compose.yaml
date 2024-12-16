@@ -1,0 +1,11 @@
+services:
+  workshop-uds1:
+    container_name: GoRevIt
+    build: .
+    restart: 'unless-stopped'
+    ports:
+      - "3240:3240"
+    cpus: 2
+    mem_limit: 2G
+    environment:
+      flag: "ptm{fake_flag}"

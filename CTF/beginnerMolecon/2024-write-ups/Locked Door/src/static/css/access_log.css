@@ -1,0 +1,112 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: monospace;
+    background-color: #00140A;
+    color: #00E36D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.terminal {
+    margin: 100px;
+    max-width: 1000px;
+    width: 1000px;
+    max-height: 500px;
+    height: fit-content;
+    padding: 50px;
+    background-color: #000;
+    border: solid 3px #00E36D;
+    border-radius: 30px;
+}
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #000;
+    color: #00E36D;
+    border: 1px solid #00E36D;
+    padding: 20px;
+    min-width: fit-content;
+    width: 200px;
+    min-height: fit-content;
+    border-radius: 10px;
+}
+.popup input[type="text"], .popup input[type="password"] {
+    color: #00E36D;
+    background-color: #333;
+    border: 1px solid #00E36D;
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+.popup input[type="text"]:focus, .popup input[type="password"]:focus, .popup input[type="text"]:hover, .popup input[type="password"]:hover,  .popup input[type="text"]:active, .popup input[type="password"]:active, .popup input[type="text"]:focus-visible, .popup input[type="password"]:focus-visible {
+    color: #00E36D;
+    background-color: #333;
+    border: 1px solid #00E36D;
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+.popup input[type="submit"] {
+    color: #00E36D;
+    background-color: #003C1D;
+    border: 1px solid #00E36D;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    width: 100%;
+    margin-right: 1rem;
+}
+.popup input[type="submit"]:hover {
+    background-color: #000;
+}
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+.info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+button {
+    color: #00E36D;
+    background-color: #003C1D;
+    border: 1px solid #00E36D;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+
+}
+button:hover {
+    background-color: #000;
+}
+p {
+    height: fit-content;
+    font-size: 1.2rem;
+}
+.buttons {
+    display: flex;
+    justify-content: space-between;
+
+}
+#error-message {
+    margin-bottom: 20px;
+    color: red;
+}

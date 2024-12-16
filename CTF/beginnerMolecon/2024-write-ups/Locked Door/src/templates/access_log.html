@@ -1,0 +1,36 @@
+<html></html>
+        <head>
+            <title>{{title}}</title>
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/access_log.css') }}">
+        </head>
+        <body>
+            
+            <div class="terminal">
+                <h1>Previous Accesses</h1>
+                {% for access in accesses %}
+                    <div class="info">
+                        <div>
+                            <p>Access ID: {{ access.id }}</p>   
+                            <p>Timestamp: {{ access.timestamp }}</p>
+                        </div>
+                        <button onclick="openLoginPopup()">Download</button>
+                    </div>
+                {% endfor %}
+                <div id="error-message"><p>{% if message %}{{message}}{% endif %}</p></div>
+
+                <div><button type="button" onclick="window.location.href='/'">Return to Home</button></div>
+            </div>
+            <script src="{{ url_for('static', filename='js/access_log.js') }}"></script>
+            <div id="login-popup" class="popup">
+                <h2>Login to Download File</h2>
+                <form action="/login" method="POST">
+                    Username: <input type="text" name="username" value="admin"><br>
+                    Password: <input type="password" name="password"><br> <! – remember to prevent sql injection – >
+                    <div class="buttons">
+                        <input type="submit" value="Login">
+                        <button type="button" class="close" onclick="closeLoginPopup()">Close</button>
+                    </div>
+                </form>
+            </div>
+        </body>
+        </html>

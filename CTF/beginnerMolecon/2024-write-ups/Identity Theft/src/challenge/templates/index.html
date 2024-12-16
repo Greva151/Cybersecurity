@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        /* Styles */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f6f9;
+            margin: 0;
+        }
+
+        /* Main Containers */
+        #main-container {
+            display: flex;
+            gap: 20px;
+            width: 90%;
+            max-width: 1200px;
+            height: 80vh;
+        }
+
+        .chat-container {
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Headers */
+        .chat-header, .tool-header {
+            background-color: #4a90e2;
+            color: #ffffff;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Messages area */
+        .chat-box {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Messages */
+        .message {
+            word-wrap: break-word;
+            word-break: break-word;
+            max-width: 75%;
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+
+        /* User/Alice Chat */
+        .user { align-self: flex-end; background-color: #4a90e2; color: #ffffff; }
+        .bot { align-self: flex-start; background-color: #e0e0e0; color: #333333; }
+
+        /* Alice-Bob Chat */
+        .alice { align-self: flex-start; background-color: #8e44ad; color: #ffffff; }
+        .bob { align-self: flex-end; background-color: #3498db; color: #ffffff; }
+
+        /* Input Footer and button */
+        #chat-input {
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            border-top: 1px solid #e0e0e0;
+            background-color: #f9f9f9;
+        }
+
+        #user-input-container {
+            display: flex;
+            align-items: center;
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            font-size: 14px;
+            outline: none;
+            margin-right: 10px;
+            box-sizing: border-box;
+        }
+
+        #send-button {
+            padding: 10px 20px;
+            background-color: #4a90e2;
+            color: #ffffff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        #send-button:hover {
+            background-color: #357abd;
+        }
+
+        /* Counter */
+        #char-count {
+            text-align: right;
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        #char-count-2 {
+            text-align: right;
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        /* Tool */
+        .tool-container {
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #hex-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        #convert-button {
+            padding: 10px;
+            background-color: #4a90e2;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        #convert-button:hover {
+            background-color: #357abd;
+        }
+
+        #result {
+            font-size: 14px;
+            color: #333333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="main-container">
+        <!-- Alice-Bob Chat -->
+        <div class="chat-container">
+            <div class="chat-header">Alice & Bob Chat</div>
+            <div id="alice-bob-chat" class="chat-box"></div>
+        </div>
+
+        <!-- User/Alice Chat -->
+        <div class="chat-container">
+            <div class="chat-header">Chat with Alice</div>
+            <div id="chat-box" class="chat-box"></div>
+            <div id="chat-input">
+                <div id="user-input-container">
+                    <input type="text" id="user-input" placeholder="Write here..." autocomplete="off" maxlength="150">
+                    <button id="send-button" onclick="sendMessage()">Send</button>
+                </div>
+                <small id="char-count">0 / 150</small> <!-- Char counter -->
+            </div>
+        </div>
+
+        <!-- Tool -->
+        <div class="tool-container">
+            <div class="tool-header">Secret-To-Key converter</div>
+            <div id="tool-content" class="chat-box">
+                <input type="text" id="hex-input" placeholder="Insert your shared secret in hex notation" maxlength="150" oninput="updateCharCount()">
+                <div id="char-count-2">0 / 150</div>
+                <button id="convert-button" onclick="convertSecret()">Convert</button>
+                <div id="result" style="word-wrap: break-word; word-break: break-word;">Result: </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        const messageInput = document.getElementById("user-input");
+        const hexInput = document.getElementById("hex-input");
+
+
+        messageInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+
+        hexInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                convertSecret();
+            }
+        });
+
+        // Update char counter function
+        function updateCharCount() {
+            const hexInput = document.getElementById("hex-input");
+            const charCount = hexInput.value.length;
+            document.getElementById("char-count-2").innerText = `${charCount} / 150`;
+        }
+
+        // Checking char counter
+        const userInput = document.getElementById("user-input");
+        const charCount = document.getElementById("char-count");
+
+        userInput.addEventListener("input", function() {
+            const currentLength = userInput.value.length;
+            const maxLength = userInput.getAttribute("maxlength");
+            charCount.textContent = `${currentLength} / ${maxLength}`;
+        });
+
+        // Send message chat function
+        async function sendMessage() {
+            const userMessage = document.getElementById("user-input").value.trim();
+            if (!userMessage) return;
+
+            addMessage(userMessage, "user");
+            document.getElementById("user-input").value = "";
+
+            const response = await fetch("/get_response", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: userMessage })
+            });
+
+            const data = await response.json();
+            addMessage(data.response, "bot");
+        }
+
+        function addMessage(text, sender) {
+            const messageElement = document.createElement("div");
+            messageElement.className = "message " + sender;
+            messageElement.innerText = text;
+            document.getElementById("chat-box").appendChild(messageElement);
+        }
+
+        async function startAliceBobChat() {
+            try {
+                // Fetch conversation from the backend
+                const response = await fetch("/get_alice_bob_chat");
+                const conversation = await response.json();
+
+                // Display messages one by one with a delay
+                let i = 0;
+                const chatInterval = setInterval(() => {
+                    if (i < conversation.length) {
+                        const message = conversation[i];
+                        addAliceBobMessage(message.text, message.sender);
+                        i++;
+                    } else {
+                        clearInterval(chatInterval);
+                    }
+                }, 1500);
+            } catch (error) {
+                console.error("Error fetching Alice and Bob conversation:", error);
+            }
+        }
+
+
+        function addAliceBobMessage(text, sender) {
+            const messageElement = document.createElement("div");
+            messageElement.className = "message " + sender;
+            messageElement.innerText = text;
+            document.getElementById("alice-bob-chat").appendChild(messageElement);
+        }
+
+        window.onload = startAliceBobChat;
+
+        async function convertSecret() {
+            const hexValue = document.getElementById("hex-input").value.trim();
+
+            if (!hexValue.match(/^[0-9a-fA-F]+$/)) {
+                document.getElementById("result").innerText = "Result: Value not valid";
+                return;
+            }
+
+            const response = await fetch("/convert_secret", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ hex: hexValue })
+            });
+
+            const data = await response.json();
+            document.getElementById("result").innerText = "Result: " + data.result;
+        }
+    </script>
+</body>
+</html>

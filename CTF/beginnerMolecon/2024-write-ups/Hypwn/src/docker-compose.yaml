@@ -1,0 +1,10 @@
+services:
+  opsuserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      - SECRET_KEY=fMNui984hsDSuigs321u8hdq921
+    ports:
+      - "5003:5000"

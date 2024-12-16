@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Game Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .menu {
+            text-align: center;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px; 
+        }
+
+        .menu h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .pokemon-options {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .pokemon {
+            cursor: pointer;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 120px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .pokemon:hover {
+            transform: scale(1.1);
+        }
+
+        .pokemon img {
+            width: 80px;
+            margin-bottom: 10px;
+        }
+
+        .form-container {
+            display: none;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form label {
+            margin-bottom: 10px;
+        }
+
+        form input {
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <h1>Choose Your Pokémon</h1>
+        <div class="pokemon-options">
+            <div class="pokemon" id="snorlax" data-pokemon="Snorlax">
+                <img src="https://img.pokemondb.net/artwork/large/snorlax.jpg" alt="Snorlax" height="100vh">
+                <p>Snorlax</p>
+            </div>
+            <div class="pokemon" id="lucario" data-pokemon="Lucario">
+                <img src="https://img.pokemondb.net/artwork/large/lucario.jpg" alt="Lucario" height="100vh">
+                <p>Lucario</p>
+            </div>
+        </div>
+        <div class="form-container">
+            <form id="pokemonForm">
+                <h2 id="selectedPokemon">You selected: </h2>
+                <label for="trainerName">Trainer Name:</label>
+                <input type="text" id="trainerName" name="trainerName" placeholder="Enter your name" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const pokemonOptions = document.querySelectorAll('.pokemon');
+        const formContainer = document.querySelector('.form-container');
+        const selectedPokemonText = document.getElementById('selectedPokemon');
+        const pokemonForm = document.getElementById('pokemonForm');
+
+        pokemonOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const selectedPokemon = option.getAttribute('data-pokemon');
+                selectedPokemonText.textContent = `You selected: ${selectedPokemon}`;
+                formContainer.style.display = 'block';
+            });
+        });
+
+        pokemonForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const trainerName = document.getElementById('trainerName').value;
+            const selectedPokemon = selectedPokemonText.textContent.split(': ')[1];
+            
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/play';
+
+            const trainerNameInput = document.createElement('input');
+            trainerNameInput.type = 'hidden';
+            trainerNameInput.name = 'trainerName';
+            trainerNameInput.value = trainerName;
+
+            const selectedPokemonInput = document.createElement('input');
+            selectedPokemonInput.type = 'hidden';
+            selectedPokemonInput.name = 'selectedPokemon';
+            selectedPokemonInput.value = selectedPokemon;
+
+            form.appendChild(trainerNameInput);
+            form.appendChild(selectedPokemonInput);
+
+            document.body.appendChild(form);
+            form.submit();
+        });
+    </script>
+    </script>
+</body>
+</html>

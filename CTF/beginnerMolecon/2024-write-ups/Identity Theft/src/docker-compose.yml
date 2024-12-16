@@ -1,0 +1,21 @@
+services:
+  dh_chall:
+    build:
+      context: .  
+      dockerfile: Dockerfile
+    restart:
+      unless-stopped
+    ports:
+      - "31338:5000" 
+    env_file:
+      - .env  
+  db:
+    image: docker.io/library/postgres:16
+    restart: unless-stopped
+    volumes: 
+      - type: tmpfs
+        target: /var/lib/postgresql/data/
+    environment:
+      POSTGRES_DB: Identity_Theft_db
+      POSTGRES_USER: DuffyDuck
+      POSTGRES_PASSWORD: 77sdvgeragrfgsgaeraheah

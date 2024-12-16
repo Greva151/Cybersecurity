@@ -1,0 +1,15 @@
+services:
+  pickle:
+    container_name: pickle-server
+    image: cybersecnatlab/challenge-jail:python-3.12-alpine
+    restart: unless-stopped
+    init: true
+    privileged: true
+    ports:
+      - '5001:1337'
+    volumes:
+      - './server.py:/home/user/server.py:ro'
+      - './recipe.txt:/home/user/recipe.txt:ro'
+    command: ["/usr/local/bin/python3", "/home/user/server.py"]
+    environment:
+      - 'LOG_STDERR=false'

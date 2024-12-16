@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ImgPlace</title>
+    <link href="/assets/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <%- include('nav') -%>
+
+        <main class="container mt-4">
+            <div class="text-center">
+                <h1>Discover Our Photos!</h1>
+                <h4>We are a community of passionate photographers, pick our reccomended photos or start your own
+                    profile and become popular!</h4>
+            </div>
+
+            <hr>
+
+            <div class=""> 
+
+                <h1>Popular Picks</h1>
+                <div class="row gap-3 col">
+                    <% photos.forEach(function(photo) { %>
+                        <div class="card" style="max-width: 20rem;">
+                            <img src="<%= photo %>" class="card-img-top">
+                        </div>
+                        <% }); %>
+                </div>
+            </div>
+        </main>
+        <script src="/assets/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

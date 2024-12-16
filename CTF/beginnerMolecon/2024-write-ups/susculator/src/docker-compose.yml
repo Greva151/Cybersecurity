@@ -1,0 +1,7 @@
+services:
+  suscalculator:
+    container_name: susculator
+    build:
+      context: .
+    ports:
+        - 7070:7070

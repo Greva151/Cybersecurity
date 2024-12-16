@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register</title>
+    <link href="/assets/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body style="min-height: 100vh;">
+
+    <%- include('nav') -%>
+
+        <div class="container d-flex justify-content-center align-items-center mt-4">
+            <div class="card w-9">
+                <div class="card-body" style="width: 50rem;">
+                    
+                    <h5 class="card-title">New Member? Start uploading photos!</h5>
+                    <% if(alert){ %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= alert %>
+                      </div>                      
+                    <% } %>
+
+                    <form method="post" action="/register">
+                        <div class="form-floating mb-3">
+                            <input name="username" type="text" class="form-control" id="usernameInput" placeholder="Username">
+                            <label for="usernameInput">Username</label>
+                        </div>
+                        <div class="form-floating">
+                            <input name="password" type="password" class="form-control" id="passwordInput" placeholder="Password">
+                            <label for="passwordInput">Password</label>
+                        </div>
+                        <div class="form-floating mt-3">
+                            <input name="confirmPassword" type="password" class="form-control" id="confirmPasswordInput" placeholder="Confirm Password">
+                            <label for="confirmPasswordInput">Confirm Password</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-4">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="/assets/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

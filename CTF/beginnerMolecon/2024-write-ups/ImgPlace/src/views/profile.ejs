@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ImgPlace</title>
+    <link href="/assets/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <%- include('nav') -%>
+
+        <main class="container mt-4">
+            <div class="text-center">
+                <img src="img/user.png" height="100" class="rounded-circle">
+                <h2><%= username %></h2>
+            </div>
+            <hr>
+
+            <h2>Your Uploads</h2>
+
+            <div class="row">
+            <% images.forEach(function(image) { %>
+                <div class="card" style="max-width: 20rem;">
+                    <img src="<%= image.src %>" class="card-img-top">
+                    <div class="card-body">
+                        <a href="/pic/<%= image.id %>" class="btn btn-primary">More...</a>
+                    </div>
+                </div>
+                <% }); %>
+                <div class="card d-flex justify-content-center" style="max-width: 20rem; height: 20rem;">
+                    <a href="/new" class="btn btn-primary">New Photo</a>
+                </div>                
+            </div>
+            
+        </main>
+        <script src="/assets/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

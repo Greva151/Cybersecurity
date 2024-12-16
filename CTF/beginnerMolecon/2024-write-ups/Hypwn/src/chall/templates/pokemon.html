@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<head>
+  <title>Pokemon</title>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/pokemon.js') }}"></script>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/pokemon.css') }}" />
+</head>
+</head>
+
+<div class="game" css>
+  <div class="opponent">
+    <div class="stats">
+      <div class="top">
+        <div class="pokeballs">
+          <div class="pokeball"></div>
+          <div class="pokeball"></div>
+          <div class="pokeball"></div>
+          <div class="pokeball"></div>
+          <div class="pokeball"></div>
+        </div>
+        <div id = "apHP" class="hp-count">100</div>
+      </div>
+      <span class="name">
+        {{opponentPokemon}}
+      </span>
+      <span class="level">
+        50
+      </span>
+    </div>
+    <img class="pokemon" src="/static/img/{{opponentPokemon}}.gif" alt ="A sprite of charizard" />
+  </div>
+  <div class="player">
+    <div class="stats">
+      <div class="top">
+        <div class="pokeballs">
+          <div class="pokeball"></div>
+          <div class="pokeball"></div>
+          <div class="pokeball"></div>
+          <div class="pokeball"></div>
+          <div class="pokeball"></div>
+        </div>
+        <div id="myHP" class="hp-count">100</div>
+      </div>
+      <span class="name">
+        {{selectedPokemon}}
+      </span>
+      <span class="level">
+        50
+      </span>
+    </div>
+    <img class="pokemon" src="/static/img/{{selectedPokemon}}.gif" alt="A gif from {{selectedPokemon}} back sprite" />
+  </div>
+  </div>
+</div>
+<div class="box">
+  <div id = "message" class="message">
+    What should {{selectedPokemon}} do?
+  </div>
+  <div class="actions">
+    {% for mule in moveset %}
+      <button onclick="useMule('{{ mule }}')">{{ mule }}</button>
+    {% endfor %}
+  </div>
+  <div class="continue" style="margin-top: 8vh;">
+    <button onclick="updateStats()">Continue</button>
+  </div>
+  </div>
+</div>

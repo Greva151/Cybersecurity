@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  magicaladvisor:
+    container_name: magical-advisor
+    build: .
+    restart: 'unless-stopped'
+    ports:
+      - "1338:1338"

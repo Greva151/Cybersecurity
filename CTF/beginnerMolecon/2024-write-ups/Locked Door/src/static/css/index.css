@@ -1,0 +1,107 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: monospace;
+    background-color: #00140A;
+    color: #00E36D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.terminal {
+    margin: 100px;
+    max-width: 1000px;
+    width: 1000px;
+    max-height: 500px;
+    height: fit-content;
+    padding: 50px;
+    background-color: #000;
+    border: solid 3px #00E36D;
+    border-radius: 30px;
+}
+input[type="text"] {
+    color: #0f0;
+    background-color: #333;
+    border: px solid #0f0;
+    padding: 5px;
+}
+input[type="submit"] {
+    color: #000;
+    background-color: #0f0;
+    border: none;
+    padding: 5px 10px;
+}
+.digits {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+.digits input {
+    width: 100px;
+    height: 100px;
+    background-color: #333;
+    color: #00E36D;
+    border: 1px solid #00E36D;
+    text-align: center;
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 5px;
+    border-radius: 10px;
+}
+.digits input:focus {
+    outline: none;
+    background-color: #003C1D;
+}
+input[type="submit"] {
+    color: #00E36D;
+    background-color: #003C1D;
+    border: 1px solid #00E36D;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 2rem;
+    font-weight: bold;
+    max-height: 100px;
+    height: 100px;
+    max-width: 400px;
+    width: 400px;
+}
+input[type="submit"]:hover {
+    background-color: #000;
+}
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+button {
+    color: #00E36D;
+    background-color: #003C1D;
+    border: 1px solid #00E36D;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    max-height: 100px;
+    height: 100px;
+    max-width: 150px;
+    width: 150px;
+}
+button:hover {
+    background-color: #000;
+}
+a {
+    color: #0f0;
+}
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+#error-message {
+    margin-bottom: 20px;
+    color: red;
+}

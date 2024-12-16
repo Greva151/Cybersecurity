@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+    </head>
+    <body>
+        <div class="terminal">
+            <h1>Insert the code to unlock the door:</h1>
+            <div id="error-message"><p>{% if message %}{{message}}{% endif %}</p></div>
+            <form action="/unlock" method="POST" id="unlock-form">
+                <div class="digits">
+                    <input type="text" maxlength="1" name="digit1" required>
+                    <input type="text" maxlength="1" name="digit2" required>
+                    <input type="text" maxlength="1" name="digit3" required>
+                    <input type="text" maxlength="1" name="digit4" required>
+                    <input type="text" maxlength="1" name="digit5" required>
+                    <input type="text" maxlength="1" name="digit6" required>
+                    <input type="text" maxlength="1" name="digit7" required>
+                    <input type="text" maxlength="1" name="digit8" required>
+                </div>
+                <div class="buttons">
+                    <button type="button" class="clear" onclick="clearDigits()">Clear</button>
+                    <input type="submit" value="Unlock">
+                    <button id="access_log_button" onclick="window.location.href='/{{access_log_page}}'" disabled>Access Log</button>
+                </div>
+            </form>
+        </div>
+    </body>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</html>

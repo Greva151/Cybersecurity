@@ -1,0 +1,11 @@
+
+
+services:
+  datadestroyer9000:
+    build: .
+    ports:
+      - 5555:5555
+    restart: unless-stopped
+    environment:
+      - SECRET=maybe i shouldn't have used reversible operations :( Here's your reward! ptm{fake_flag}
+

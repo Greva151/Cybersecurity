@@ -1,0 +1,8 @@
+services:
+  smallrsa:
+    build: .
+    ports:
+      - 3333:3333
+    restart: unless-stopped
+    environment:
+      - FLAG=ptm{fake_flag}

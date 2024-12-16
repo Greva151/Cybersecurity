@@ -1,1 +1,0 @@
-in teoria la solve è che gli hp dell'avversario un char e dopo 9 volte che spammi cure e andava in underoverflow
