@@ -65,7 +65,7 @@ void store_num(int* vec) {
   int pos = 0, val = 0;
   puts("In che posizione vuoi immagazzinare il numero?");
   safe_scanf(&pos);
-  puts("E cosa vuoi scriverci?");
+  puts("E cosa vuoi scriverci?"); 
   safe_scanf(&val);
   vec[pos] = val;
   puts("Fatto!");

